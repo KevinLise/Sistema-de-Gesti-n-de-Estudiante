@@ -9,20 +9,20 @@ def cargar_datos():
             datos = json.load(f)
             return {int(k): v for k, v in datos.items()}
     return {
-        1: {"ID": 100327560, "Nombre": "juan",   "Edad": "21", "course":"soporte tecnico computacion","status": "activo"  },
-        2: {"ID": 100326570, "Nombre": "carlos", "Edad": "36", "course": "panaderia","status":"inactivo"},
-        3: {"ID": 100326590, "Nombre": "jose",  "Edad": "45", "course": "cocina","status":"activo"},
+        1: {"ID": 100327560, "nombre": "juan",   "edad": "21","course":"soporte tecnico computacion","status": "activo"  },
+        2: {"ID": 100326570, "nombre": "carlos", "edad": "36","course": "panaderia","status":"inactivo"},
+        3: {"ID": 100326590, "nombre": "jose",  "edad": "45","course": "cocina","status":"activo"},
     }
 
 def guardar_datos():
     with open(sistema, "w", encoding="utf-8") as f:
-        json.dump({str(k): v for k, v in estudiante.items()}, f, indent=4, ensure_ascii=False)
+        json.dump({str(k): v for k, v in estudiante.items()}, f, indent=8, ensure_ascii=False)
     print(f"(Guardado en '{sistema}')")
 
 # Cargar datos al iniciar el programa
 estudiante = cargar_datos()
 
-def mostras_datos():
+def mostras_estudiante():
     if len(estudiante) == 0:
         print("No hay registro:")
         return
@@ -32,24 +32,25 @@ def mostras_datos():
         print(f"  ID     : {datos['ID']}")
         print(f"  Nombre : {datos['Nombre']}")
         print(f"  Edad   : {datos['Edad']}")
-        print(f"  Course     : {datos['course']}")
-        print(f"  Status     : {datos['status']}")
+        print(f"  Course     : {datos['Course']}")
+        print(f"  Status     : {datos['Status']}")
+    print()
     
        
 
 def agregar_estudiante():
-    nueva_llave = max(estudiante.keys())+1
+    nueva_llave = max(estudiante.keys(), default=0) + 1
     print(f"\nNuevo Estudiante {nueva_llave}")
     nuevo_id   = input("ID      : ").strip()
     nuevo_nom  = input("Nombre  : ").strip()
     nueva_edad = input("Edad    : ").strip()
-    nuevo_cour  = input("course  : ").strip()
+    nuevo_cour = input("course  : ").strip()
     nuevo_stat = input("status   :").strip()
 
 
     estudiante[nueva_llave] = {
         "ID":     nuevo_id,
-        "Nombre": nuevo_nom,
+        "nombre": nuevo_nom,
         "Edad":   nueva_edad,
         "course": nuevo_cour,
         "status": nuevo_stat
@@ -59,13 +60,22 @@ def agregar_estudiante():
     
 
 def eliminar_estudiante():
-    mostras_datos()
+    mostras_estudiante()
+
+    if len(estudiante) == 0:
+
+        return
     try:
         llave = int(input("\nNumero de ID  eliminar: "))
         if llave in estudiante:
-            nombre = estudiante[llave]["Nombre"]
-            del estudiante[llave]
-            print(f"estudiante '{nombre}' eliminado.")
+            nombret = estudiante[llave]["nombre"]
+            confirmar = input(f"¿Seguro que deseas eliminar '{nombret}'? (s/n): ").strip().lower()
+            if confirmar == "s":
+                del estudiante[llave]
+                guardar_datos()
+                print(f"estudiante '{nombret}' eliminado.")
+            else:
+                print("Eliminacion cancelada.")
         else:
             print("estudiante no encontrado.")
     except ValueError:
@@ -89,8 +99,7 @@ def buscar_id():
   
 
 def actulizar_datos():
-    mostras_datos()
-    busqueda_datos = int(input("Que dato quiere actulizar "))
+    mostras_estudiante()
     if len(estudiante) == 0:
         return
     try:
@@ -121,7 +130,7 @@ while not dats:
     opcion = input("\nElige una opcion: ").strip()
 
     if opcion == "1":
-        mostras_datos()
+        mostras_estudiante()
     elif opcion == "2":
         agregar_estudiante()
     elif opcion == "3":
