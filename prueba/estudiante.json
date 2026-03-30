@@ -1,0 +1,37 @@
+{
+    "1": {
+        "ID": 100327560,
+        "Nombre": "juan",
+        "Edad": "21",
+        "course2": "soporte tecnico computacion",
+        "status": "activo"
+    },
+    "2": {
+        "ID": 100326570,
+        "Nombre": "carlos",
+        "Edad": "36",
+        "course": "panaderia",
+        "status": "inactivo"
+    },
+    "3": {
+        "ID": 100326590,
+        "Nombre": "jose",
+        "Edad": "45",
+        "course": "cocina",
+        "status": "activo"
+    },
+    "4": {
+        "ID": "1001918588",
+        "Nombre": "ken",
+        "Edad": "45",
+        "course": "danza",
+        "status": "activo"
+    },
+    "5": {
+        "ID": "",
+        "Nombre": "",
+        "Edad": "",
+        "course": "",
+        "status": ""
+    }
+}
